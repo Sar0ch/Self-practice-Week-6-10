@@ -36,33 +36,70 @@ console.log(calculate([10, 2, 0, 7], sort))
 
 //-----------------------------------------------------------------------
 
-const idGen = idGenerator()
-function idGenerator () {
-    let count = 0
-    return function(){
-        count += 1
-            return count
-    }
-}
-console.log(idGen())
-console.log(idGen())
-console.log(idGen())
+// const idGen = idGenerator()
+// function idGenerator () {
+//     let count = 0
+//     return function(){
+//         count += 1
+//             return count
+//     }
+// }
+// console.log(idGen())
+// console.log(idGen())
+// console.log(idGen())
 
-function outerFunction(a) {
-  function innerFunction(b) {
-    return a + b
+// function outerFunction(a) {
+//   function innerFunction(b) {
+//     return a + b
+//   }
+//   return innerFunction
+// }
+
+
+// const addFive = outerFunction(5)
+// console.log(addFive(3))  // 8
+
+// const addTen = outerFunction(10)
+// console.log(addTen(2))   // 12
+
+// function doSomething(x){
+//   function echo(){
+//     return `hello`,$[x]
+//   }
+// return echo
+// }
+// console.log(doSomething())
+
+//-----------------------------------------------------------------------
+//!Closure Funtion 
+
+function makeAdder(x,y){ //5
+  function add(y) { //y=3
+      //closure function
+    return x + y 
   }
-  return innerFunction
+  return add 
+  // return x + y 
 }
+const add5 = makeAdder(5) // add5 = add
+console.log(add5(3)) //8
+// console.log(makeAdder(5,3))
+// console.log(makeAdder(5,3))
 
+const idGen = idGenerator()
+function idGenerator(){
+  let count = 0
+  return function(){
+    count += 1
+    return count
+  }
+}
+console.log(idGen()) // 1
+console.log(idGen()) // 2
+console.log(idGen()) // 3
 
 const addFive = outerFunction(5)
-console.log(addFive(3))  // 8
+console.log(addFive(3))
 
 const addTen = outerFunction(10)
-console.log(addTen(2))   // 12
-
-let a = 1 //global scope
-function doSomething(x){
-  let a = 10
-}
+console.log(addTen(2))
