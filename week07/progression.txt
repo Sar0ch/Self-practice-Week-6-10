@@ -1,0 +1,81 @@
+สิ่งที่เรียนวันนี้
+- เข้าใจหลักการของ DOM 
+- เข้าใจการเข้าถึงและตรวจสอบ node 
+- การเข้าถึงลูก (child) และ attributes
+- เข้าใจการสร้างและเพิ่ม node ใหม่ 
+- ได้ลองฝึกเขียนโค้ดหลายๆแบบทั้งการเพิ่ม node แบบเต็ม แล้วก็แบบ shortcut 
+ตอนทำแบบฝึกตอนท้าย ทำให้เข้าใจมากขึ้น และ เข้าใจว่าตัวเองผิดตรงไหนบ้างตอนแรก
+ตรง console ในหน้าเว็ป มันขึ้น error หายังไงก็ไม่เจอว่าผิดตรงไหนเลยให้ chatgpt 
+ทำให้รู้ว่าตรง pp.appendChild(p1) เรียกสลับกัน ตอนแรกเอา p1 ไปใช้ในการ appendChild
+
+____________________________ Lecture ____________________________
+DOM เป็นแนวคิดของการอ่านเอกสารทั้งหมด แล้วเอาความสัมพันธ์ลำดับชั้นในเอกสารมาสร้างต้นไม้ในหน่วยความจำ
+DOM - Modeling เอกสารขึ้นมา structure เอกสารโดยการอ่านเอกสารทั้งไฟล์ แล้วมา build tree ในเอกสาร 
+- เราจะอ่านเอกสาร html เรายังไง
+- เราจะเข้าถึงแล้ว ระบุ node ที่เราสนใจโดยใช้ภาษา JS ยังไง
+- เราจะ Create Read Update Delete node ในต้นไม้ยังไง เพื่อทำให้เว็ปมีการ interactive และ responsive ได้
+- มันเป็นการ capture เอกสารแบบนึงที่ไม่ขึ้นกับภาษาโปรแกรม ไม่ขึ้นกับภาษาอะไรเลย เป็นโครงสร้างข้างมูล ด้วยการ build library
+- เวลาอ้างถึง DOM ในแง่ โครงสร้างข้อมูล → root node = Document
+- เวลาอ้างถึง โครงสร้าง HTML → root element = <html>
+
+Tag placement 
+- ถ้าเราแปะ JS files ไ้วที่ <head> มันจะโหลด JS ก่อนแล้วค่อยเรนเดอร์ html 
+- แต่ถ้าเรามี JS เยอะมากเนี่ย มันจะทำให้การโหลดหน้าเว็ปนั้นอะ มันจะช้า แล้วจะทำให้เป็นเว็ปเปล่า รวมถึงการที่เราอ้างถึง objecet DOM ในกรณีนี้ เราจึงเอามาไว้ก่อนถึง tag ปิด ของ </body>
+ด้วยสองเหตุผล 
+1.เราต้องการให้โหลด pages ให้เสร็จก่อนถึง JS
+2.เพื่อความถูกต้องเมื่อ js มีการอ้างถึง objecet ใดๆในเอกสาร เราจึงเอามาเขียนไว้ที่ก่อนปิด </body>
+
+แต่มันมีอีกแบบนึงคือ refer คือเลื่อนไปก่อน เราจะไว้ที่ <head> คือมันจะรอโหลด content แล้วค่อยรัน JS
+
+เมื่อไหร่ก็ตามที่ html doc เนี่ยถูกโหลดมาที่ browser มันจะเกิด Document Obj แล้วทุกอย่างในนั้นจะเป็น node ก็คือเมื่อ
+ความสัมพันธ์ระหว่าง node เอามาสร้างต้นไม้ได้
+
+ตัวอย่าง 
+
+<p style = "colorsrcd" id = '123' > sample Text </p>
+
+Element Node
+    - <p>_________________</p>
+    
+Attribute Node (ของ <p>)
+    - style="colorsrcd"
+    - id="123"
+
+Text Node
+    -"sample Test"
+    -whtie space ก็คือตรงที่เว้นไว้ระหว่างระหว่าง tag กันก็เรียกว่า text node
+
+Comment node
+<!-- comment text -- >
+
+Root node = Document node
+ทุกๆ node ใน DOM มันมาจาก node interface จะให้ property กับ function มาด้วย
+
+Document   ← Root Node ต้องสร้าง logical node ขึ้นมาถ้ามี Root Element หลายอัน
+└── html   ← Root Element
+    ├── head
+    └── body
+!ถ้ามีlevel เดียวกัน อีก เช่น 
+└── comment text
+└── !Doctype
+!จะทำให้ไม่มี Root Element
+
+*Root Element ≠ Root Node
+ถ้าเป็น html doc Root Element คือ node hlml
+
+ถ้าจะอ้างถึง root node ให้ console.log(document) หรือ console.log(window.document) 
+
+Attribute node ไม่ใช่ node ใน DOM เพราะงั้นไม่่ต้องไปพยายามหา parentNode, previousSibling, and nextSibling 
+มันจะเป็น null นะจ๊ะ เพราะมันไม่มี node ในนั้น
+อย่างเดียวที่มันจะให้เราได้คือ Element ที่มันเป็นเจ้่าของ(owner)
+
+เวลาเราสร้าง textnode มี 3 แบบ
+1.innerHTML - ถ้าเป็นการเพิ่ม text เข้าไป มันจะเข้าใจ syntag ของ HTML 
+└── ถ้าอยากได้ tag ใช้อันนี้
+
+2.innerText - จะได้ข้อความที่ user มองเห็น เข้าใจ css อยู่ ถ้าเรามี css ที่ไปส่งผลกับ text ที่มันจะคืนค่่า
+เช่น display none มันก็จะให้มาแค่ที่ไม่ได้กระทบ
+└── ถ้าอยากได้ text ที่เข้าใจ css
+
+3.textContent - มองทุกอย่างเป็น character หมด ไม่สนใจ syntag ทั้งนั้น สนใจที่จะดึง text มาให้เรา
+└── อยากได้ text ระหว่าง tag แล้วไม่สนใจ css ให้ใช้อันนี้
