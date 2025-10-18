@@ -1,0 +1,59 @@
+สิ่งที่เรียนวันนี้
+- มึนมึนมึน
+- มีบางช่วงเหมือนหลุดไปแต่ยังพอกลับมาได้บ้างช่วงท้ายๆ
+- ได้เรียนเกี่ยวกับ event ต่างๆ ได้ลองดูหลายๆอย่างที่เกิดขึ้นใน event
+
+____________________________ Lecture ____________________________
+Event -เหตุการณ์
+โครงสร้างของหน้า web คือ DOM 
+    เมื่อ DOM โหลดเสร็จจะได้
+        └── DOM Content Loaded 
+    เมื่อ App มีการโหลดรูปภาพ/style sheey มาจาก external source มันจะเข้าสู่สถานะ event 'loaded'
+Event จะมี 2 แบบ
+    └── เกิดขึ้นได้เองจากการที่สถานะมันเปลี่ยน
+    └── เกิดได้จาก user มี interact ด้วย เช่น มีการไปกดนั่นนี่ , mouse over 
+
+Event Propagation - ทิศทางการไหลของเหตุการ มี 3 phase
+1.Capturing Phase (ไหลจากบนลงล่าง)⬇️
+    └── เป็นช่วงที่ Event “วิ่งลงมา” เป็นการ “จับเหตุการณ์ก่อนถึงจุดเป้าหมาย” document → html → body → ... → target element
+2.Traget phase
+    └── ถึงจุดที่ Event เกิดขึ้นจริง เช่น ผู้ใช้คลิก <button> ในช่วงนี้ Event จะ “ทำงานที่ target เอง” ก่อนเข้าสู่เฟสถัดไป เฟสนี้เกิดขึ้นเพียงที่เดียว คือ “จุดที่เกิดเหตุ”
+3.Bubbling Phase (ไหลจากล่างขึ้นบน) ⬆️
+    └── หลังจากถึง target แล้ว Event จะ “วิ่งย้อนกลับขึ้นไป” จาก element นั้น → พ่อ → ปู่ → จนถึง document
+
+❌ ไม่ควรเอา js ไปรวมกับ HTML ❌
+
+✅ Recomend Adding and removing evnet handlers ✅
+└── addEventListener()
+└── removeEventListener()
+    └── ข้อจำกัดของ​ remove คือ เวลาจะ remove ให้เขียน parameter pattern เดียวกับที่ add มา และจะใช้ไม่ได้กับ anonymous Function
+
+parameter ที่ต้องใส่ใจ
+└── event type - ระบุชื่อ event ใน string
+    └── key-up , key-down ,mouse-over
+└── Function - ระบุฟังก์ชั่น
+    └── ต้องไป query DOM มา แล้วก็ฝัง event ไว้ object เดียวกันสามารถทำงานได้มากกว่า 1 Function add อะไรก่อนจะทำอันนั้นก่อน ทำตามลำดับการ add
+└── Capturing/Bubbling 
+    └── By default is Bubble and Boolean is false.
+
+System Dialogs 
+└── confirm() - ไว้ยืนยันมี 2 ปุ่ม 0k , cancel ผลลัพธ์จะเป็น Boolean
+└── alert() - แสดง info ที่เราจะสื่อสาร มีปุ่มเดียวคือ รับทราบ
+└── prompt() - รับข้อมูลจาก user ให้ใส่แล้วกด ok หรือ cancel
+    └── ถ้า user ไม่กรอกจะได้ค่า null
+    └── ถ้ากด cancel จะได้ false 
+
+Event object
+  └── (event.target) //เหตุการณ์เกิดที่ไหน target คือที่นั่น
+  └── (event.currentTargettarget) // node ที่อยู่ในเส้นทางที่มีความสัมพันธ์กับ target ตัวที่มี event listener
+  └── (event.eventPhase) // ขั้นตอนของ event flow 
+
+preventDefault
+    └── หยุดไม่ให้ browser ทำสิ่งที่มันจะทำตามปกติแต่ เหตุการณ์ยังเกิดขึ้นนะ — แค่ “ไม่ให้มันทำ action ปกติเท่านั้น”
+
+Event type - มีหลายแบบมาก
+    └── DOMContentLoaded - ไม่ต้องมีใครมายุ่งไรกับมัน DOM สร้างเสร็จเมื่อไหร่ event นี้เกิดทันที เป็นของ document ที่เหลืิอ window จัดการ
+    └─ load - จะเกิดเมื่อ external resource โหลดเสร็จทั้งหมด
+    └── beforeunload - อาจจะมองไม่ค่อยเห็นเพราะเกิดก่อนปิด
+    └── unload - เป็นเรื่องของ secure 
+

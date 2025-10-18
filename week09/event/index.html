@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body style="background-color: cyan">
-    <div style="background-color: pink; height: 200px">
-      <button>Submit</button>
-    </div>
+  <body>
+    <form>
+      <label for="fname">First name:</label>
+      <input type="text" id="fname" name="fname" value="John" />
+      <label for="lname">Last name:</label>
+      <input type="text" id="lname" name="lname" value="Doe" />
+      <p id="message"></p>
+      <input type="submit" value="Submit" />
+    </form>
     <script src="./main.js"></script>
   </body>
 </html>
- 
