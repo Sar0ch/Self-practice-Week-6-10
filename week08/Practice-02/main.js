@@ -1,10 +1,9 @@
-const box = document.getElementById("box");
-const buttons = document.querySelectorAll('button[data-color]');
- 
-buttons.forEach(button => {
-  button.onclick = () => {
-    box.style.backgroundColor = button.dataset.color;
-    box.textContent = button.dataset.color.toUpperCase();
-  };
-});
- 
+const buttons = document.getElementsByTagName('button');
+const box = document.getElementById('box');
+
+Array.from(buttons).forEach((button) => {
+  button.addEventListener('click', () => {
+    const color = button.dataset.color   
+    box.style.background = color         
+  })
+})

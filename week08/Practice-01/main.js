@@ -1,13 +1,17 @@
-const addButton = document.getElementById('add')
-addButton.addEventListener('click',()=> {
-    //write code here ...
-})
-//อันนี้ึคือการadd event
+const buttons = document.getElementsByTagName('button')
+const box =document.getElementById('box')
 
-const buttons = document.getElementsByTagName("button")
-//console.log(buttons)
+console.log(buttons)
 Array.from(buttons).forEach((button) => 
-    button.addEventListener("click",() => {
-        //common event handle codes
+    button.addEventListener("click" , () => {
+        if (button.id === "add"){
+            box.classList.add('bordered')
+        }
+        else if (button.id === "remove"){
+            box.classList.remove('bordered')
+        }
+         else if (button.id === "toggle"){
+            box.classList.toggle('bordered')
+        }
     })
 )
